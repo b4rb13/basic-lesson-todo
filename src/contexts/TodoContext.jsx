@@ -1,5 +1,6 @@
 import { createContext, useState, useMemo, useCallback } from "react";
 import { useToast } from "@chakra-ui/react";
+import { useEffect } from "react";
 const statuses = {
   success: "success",
   error: "error",
@@ -7,35 +8,43 @@ const statuses = {
   info: "info",
 };
 
+const getData = async (setList, setLoading) => {
+  try {
+    setLoading(true)
+    const res = await fetch('https://jsonplaceholder.typicode.com/todos', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const data = await res.json()
+    const newData = data.slice(0, 10).map(item => ({
+      id: item.id,
+      value: item.title,
+      isDone: item.completed
+    }))
+    setTimeout(() => {
+      setList(newData)
+      setLoading(false)
+    }, 3000)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const TodoContext = createContext();
 
-const initialList = [
-  {
-    id: "123",
-    value: "123",
-    isDone: false,
-  },
-  {
-    id: "234",
-    value: "234",
-    isDone: false,
-  },
-  {
-    id: "456",
-    value: "456",
-    isDone: false,
-  },
-  {
-    id: "678",
-    value: "678",
-    isDone: false,
-  },
-];
-
 const TodoProvider = ({ children }) => {
-  const [list, setList] = useState(initialList);
+  const [list, setList] = useState([]);
   const [isEditMode, setIsEditMode] = useState(null);
   const [value, setValue] = useState("");
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    getData(setList, setLoading)
+  }, [])
+
   const statistics = useMemo(() => {
     const newStat = {
       totalCount: list.length,
@@ -141,7 +150,8 @@ const TodoProvider = ({ children }) => {
         editTodo,
         handleDelete,
         setInpValue,
-        statistics
+        statistics,
+        loading
       }}
     >
       {children}

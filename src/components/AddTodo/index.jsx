@@ -4,7 +4,7 @@ import { Input, Button, HStack } from "@chakra-ui/react";
 import useTodoContext from "../../contexts/useTodoContext";
 const AddTodo = () => {
   const ref = useRef();
-  const { value, isEditMode, handleChange, addTodo, editTodo } =
+  const { value, isEditMode, handleChange, addTodo, editTodo, loading } =
     useTodoContext()
 
   return (
@@ -22,6 +22,7 @@ const AddTodo = () => {
             ref={ref}
             value={value}
             onChange={handleChange}
+            disabled={loading}
           />
           <Button
             onClick={(e) => {
@@ -37,6 +38,7 @@ const AddTodo = () => {
             rightIcon={isEditMode ? <FaCheckDouble /> : <FaPlus />}
             colorScheme="teal"
             variant="outline"
+            isDisabled={loading}
           >
             {isEditMode ? "Save" : "Add"}
           </Button>
