@@ -1,0 +1,52 @@
+.todo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #efefef;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.icon {
+    font-size: 24px;
+    cursor: pointer;
+
+}
+
+.icon:hover {
+    transform: scale(1.1);
+    transition: transform 200ms;
+}
+
+.icon.edit {
+    color: orange;
+}
+
+.icon.done {
+    color: green;
+}
+
+.icon.delete {
+    color: red;
+}
+
+.icon.undone {
+    color: orangered;
+}
+
+
+.actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.todo-container.done {
+    background-color: #c7ffb1;
+}
+
+.todo-container:not(.done) {
+    background-color: #efefef;
+}

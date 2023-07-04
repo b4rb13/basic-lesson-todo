@@ -1,0 +1,9 @@
+.main-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.main-content {
+    padding: 20px;
+}
