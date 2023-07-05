@@ -136,6 +136,10 @@ const TodoProvider = ({ children }) => {
   const setInpValue = (v) => {
     setValue(v);
   };
+  const cancelMode = () => {
+    switchToEditMode(null)
+    setValue('')
+  }
 
   return (
     <TodoContext.Provider
@@ -144,6 +148,7 @@ const TodoProvider = ({ children }) => {
         isEditMode,
         value,
         handleChange,
+        cancelMode,
         addTodo,
         switchToEditMode,
         markAsDone,

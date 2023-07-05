@@ -2,7 +2,6 @@ import useTodoContext from "../../../../contexts/useTodoContext";
 import Skeleton from "react-loading-skeleton";
 import "./style.css";
 const Footer = () => {
-  console.log("footer");
   const { statistics, loading } = useTodoContext();
   return (
     <div className="footer-container">
