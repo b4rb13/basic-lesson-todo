@@ -1,15 +1,14 @@
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import AddTodo from "../AddTodo";
+import { Outlet } from 'react-router-dom'
 import "./style.css";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <div className="main-container">
       <Header />
       <div className="main-content">
-        <AddTodo />
-        {children}
+        <Outlet/>
       </div>
       <Footer />
     </div>

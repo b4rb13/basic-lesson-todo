@@ -1,5 +1,6 @@
 import { createContext, useState, useMemo, useCallback } from "react";
 import { useToast } from "@chakra-ui/react";
+import {useNavigate} from 'react-router-dom'
 import { useEffect } from "react";
 const statuses = {
   success: "success",
@@ -66,7 +67,7 @@ const TodoProvider = ({ children }) => {
         title: "Error while adding Todo item.",
         description: "Todo item can not be empty.",
         status: statuses.error,
-        duration: 3000,
+        duration: 400,
         isClosable: true,
       });
       return;

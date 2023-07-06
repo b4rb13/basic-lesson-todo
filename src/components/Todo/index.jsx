@@ -4,12 +4,21 @@ import {
   FaCheckCircle,
   FaTrash,
   FaWindowClose,
+  FaEye,
 } from "react-icons/fa";
+import { useNavigate, useLocation, useMatch } from "react-router-dom";
 import useTodoContext from "../../contexts/useTodoContext";
 
 const Todo = ({ value, id, isDone }) => {
   const { switchToEditMode, setInpValue, markAsDone, handleDelete } =
-    useTodoContext()
+    useTodoContext();
+
+  const location = useLocation();
+  const match = useMatch('/')
+
+  console.log(match)
+
+  const navigate = useNavigate();
   return (
     <div className={`todo-container ${isDone ? "done" : ""}`}>
       <p>{value}</p>
@@ -34,11 +43,24 @@ const Todo = ({ value, id, isDone }) => {
         <span
           onClick={() => {
             handleDelete(id);
+            if (location.pathname !== "/") {
+              navigate("../");
+            }
           }}
           className="icon delete"
         >
           <FaTrash />
         </span>
+        {location.pathname === "/" && (
+          <span
+            onClick={() => {
+              navigate(`/todo/${id}`);
+            }}
+            className="icon view"
+          >
+            <FaEye />
+          </span>
+        )}
       </div>
     </div>
   );
