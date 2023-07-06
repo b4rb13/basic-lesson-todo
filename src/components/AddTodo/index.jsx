@@ -4,8 +4,15 @@ import { Input, Button, HStack } from "@chakra-ui/react";
 import useTodoContext from "../../contexts/useTodoContext";
 const AddTodo = () => {
   const ref = useRef();
-  const { value, isEditMode, handleChange, addTodo, editTodo, loading } =
-    useTodoContext()
+  const {
+    value,
+    isEditMode,
+    handleChange,
+    addTodo,
+    editTodo,
+    loading,
+    cancelEdit,
+  } = useTodoContext();
 
   return (
     <div>
@@ -42,6 +49,11 @@ const AddTodo = () => {
           >
             {isEditMode ? "Save" : "Add"}
           </Button>
+          {isEditMode ? (
+            <Button onClick={() => cancelEdit()}> Cancel </Button>
+          ) : (
+            ""
+          )}
         </HStack>
       </form>
     </div>

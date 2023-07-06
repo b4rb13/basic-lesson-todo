@@ -10,28 +10,28 @@ const statuses = {
 
 const getData = async (setList, setLoading) => {
   try {
-    setLoading(true)
-    const res = await fetch('https://jsonplaceholder.typicode.com/todos', {
-      method: 'GET',
+    setLoading(true);
+    const res = await fetch("https://jsonplaceholder.typicode.com/todos", {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        "Content-Type": "application/json",
+      },
+    });
 
-    const data = await res.json()
-    const newData = data.slice(0, 10).map(item => ({
+    const data = await res.json();
+    const newData = data.slice(0, 10).map((item) => ({
       id: item.id,
       value: item.title,
-      isDone: item.completed
-    }))
+      isDone: item.completed,
+    }));
     setTimeout(() => {
-      setList(newData)
-      setLoading(false)
-    }, 3000)
+      setList(newData);
+      setLoading(false);
+    }, 3000);
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
-}
+};
 
 export const TodoContext = createContext();
 
@@ -39,19 +39,19 @@ const TodoProvider = ({ children }) => {
   const [list, setList] = useState([]);
   const [isEditMode, setIsEditMode] = useState(null);
   const [value, setValue] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getData(setList, setLoading)
-  }, [])
+    getData(setList, setLoading);
+  }, []);
 
   const statistics = useMemo(() => {
     const newStat = {
       totalCount: list.length,
-      done: list.filter(el => el.isDone).length,
-      pending: list.filter(el => !el.isDone).length,
-    }
-    return newStat
+      done: list.filter((el) => el.isDone).length,
+      pending: list.filter((el) => !el.isDone).length,
+    };
+    return newStat;
   }, [list]);
 
   const toast = useToast();
@@ -137,6 +137,11 @@ const TodoProvider = ({ children }) => {
     setValue(v);
   };
 
+  const cancelEdit = () => {
+    switchToEditMode(null);
+    setValue("");
+  };
+
   return (
     <TodoContext.Provider
       value={{
@@ -150,8 +155,9 @@ const TodoProvider = ({ children }) => {
         editTodo,
         handleDelete,
         setInpValue,
+        cancelEdit,
         statistics,
-        loading
+        loading,
       }}
     >
       {children}
